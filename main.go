@@ -88,7 +88,7 @@ func main() {
 		}
 		DeleteTask(&tasks, id)
 	case "mark-in-progress":
-		if len(os.Args) != 2 {
+		if len(os.Args) != 3 {
 			fmt.Println("Введено неверное количество элементов")
 			return
 		}
@@ -99,7 +99,7 @@ func main() {
 		}
 		MarkTask(&tasks, id, "in-progress")
 	case "mark-done":
-		if len(os.Args) != 2 {
+		if len(os.Args) != 3 {
 			fmt.Println("Введено неверное количество элементов")
 			return
 		}
@@ -110,7 +110,7 @@ func main() {
 		}
 		MarkTask(&tasks, id, "done")
 	case "mark-todo":
-		if len(os.Args) != 2 {
+		if len(os.Args) != 3 {
 			fmt.Println("Введено неверное количество элементов")
 			return
 		}
