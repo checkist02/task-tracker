@@ -1,3 +1,3 @@
-module task_cli
+module task-cli
 
 go 1.27.1
