@@ -41,7 +41,7 @@ func printTask(task Task) {
 }
 func AddTask(tasks *[]Task, description string) () {
 	newTask := Task{
-		ID:          getId(*tasks),
+		ID:          (getId(*tasks)),
 		Description: description,
 		Status:      "in-progress",
 		CreatedAt:   time.Now(),
@@ -53,7 +53,7 @@ func AddTask(tasks *[]Task, description string) () {
 		fmt.Println("Ошибка добавления задачи")
 		return
 	}
-	fmt.Println("Добавлена новая запись с id", getId(*tasks))
+	fmt.Println("Добавлена новая запись с id", newTask.ID)
 }
 func DeleteTask(tasks *[]Task, id int) {
 	_, idFound, err := foundById(tasks, id)
@@ -118,9 +118,10 @@ func MarkTask(tasks *[]Task, id int, status string) {
 		fmt.Println(err)
 	}else{
 		(*tasks)[i].Status = status
+		saveToFile(*tasks)
 	}
 	
 }
 func getId(tasks []Task) int {
-	return len(tasks)
+	return len(tasks)+1
 }
