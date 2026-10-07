@@ -79,10 +79,18 @@ func UpdateTask(tasks *[]Task, id int, description string) {
 	_, idFound, err := foundById(tasks, id)
 	if err != nil {
 		fmt.Println(err)
-	} else {
-		(*tasks)[idFound].Description = description
+		return
 	}
 
+	(*tasks)[idFound].Description = description
+	(*tasks)[idFound].UpdatedAt = time.Now()
+
+	if err := saveToFile(*tasks); err != nil {
+		fmt.Println("Ошибка обновления задачи")
+		return
+	}
+
+	fmt.Println("Задача обновлена")
 }
 func List(tasks []Task, status string) {
 	switch status {
@@ -114,14 +122,29 @@ func List(tasks []Task, status string) {
 }
 func MarkTask(tasks *[]Task, id int, status string) {
 	_, i, err := foundById(tasks, id)
-	if err!= nil{
+	if err != nil {
 		fmt.Println(err)
-	}else{
-		(*tasks)[i].Status = status
-		saveToFile(*tasks)
+		return
 	}
-	
+
+	(*tasks)[i].Status = status
+	(*tasks)[i].UpdatedAt = time.Now()
+
+	if err := saveToFile(*tasks); err != nil {
+		fmt.Println("Ошибка сохранения задачи")
+		return
+	}
+
+	fmt.Println("Статус задачи обновлён")
 }
 func getId(tasks []Task) int {
-	return len(tasks)+1
+	maxID := 0
+
+	for _, task := range tasks {
+		if task.ID > maxID {
+			maxID = task.ID
+		}
+	}
+
+	return maxID + 1
 }
